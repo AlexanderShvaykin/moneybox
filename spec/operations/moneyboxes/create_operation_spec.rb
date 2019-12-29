@@ -14,8 +14,8 @@ describe Moneyboxes::CreateOperation do
       create_model
     end
 
-    it "returns Success" do
-      expect(subject).to be_a(Dry::Monads::Result::Success)
+    it "returns created code and record" do
+      expect(subject.value!).to eq [:created, model]
     end
 
     context "without name" do
@@ -26,8 +26,8 @@ describe Moneyboxes::CreateOperation do
         create_model
       end
 
-      it "returns Failure" do
-        expect(subject).to be_a(Dry::Monads::Result::Failure)
+      it "returns error and payload" do
+        expect(subject.failure).to contain_exactly :bad_params, instance_of(Hash)
       end
     end
 
@@ -39,8 +39,8 @@ describe Moneyboxes::CreateOperation do
         create_model
       end
 
-      it "returns Failure" do
-        expect(subject).to be_a(Dry::Monads::Result::Failure)
+      it "returns error and payload" do
+        expect(subject.failure).to contain_exactly :bad_params, instance_of(Hash)
       end
     end
   end
