@@ -15,4 +15,11 @@ describe Api::MoneyboxEntriesController do
       expect { subject }.to change(MoneyboxEntry, :count).by(1)
     end
   end
+
+  describe "GET #show" do
+    specify  do
+      expect(get: "/api/moneyboxes/1")
+          .to route_to(controller: "api/moneybox_entries", action: "show", id: "1")
+    end
+  end
 end

@@ -5,5 +5,9 @@ module Api
     def create
       render_result(Moneyboxes::CreateOperation.new(**params).call)
     end
+
+    def show
+      render_result(FindOperation.new(**params).call(MoneyboxEntry))
+    end
   end
 end
