@@ -8,7 +8,7 @@ class ApplicationOperation
   attr_reader :params
 
   def initialize(params)
-    @params = params
+    @params = params.with_indifferent_access.freeze
   end
 
   def self.schema(**options, &block)
