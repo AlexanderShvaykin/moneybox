@@ -1,0 +1,2 @@
+class MoneyboxEntry < ApplicationRecord
+end
