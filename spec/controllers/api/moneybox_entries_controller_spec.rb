@@ -7,7 +7,9 @@ describe Api::MoneyboxEntriesController do
           .to route_to(controller: "api/moneybox_entries", action: "create")
     end
 
-    subject { post :create }
+    subject { post :create, params: params, format: :as_json }
+
+    let(:params) { Hash[name: 'Foo'] }
 
     it "creates moneybox" do
       expect { subject }.to change(MoneyboxEntry, :count).by(1)
