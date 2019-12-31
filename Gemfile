@@ -37,6 +37,8 @@ group :development, :test do
   gem "rspec-rails"
   gem 'rspec-json_expectations'
   gem "test-prof"
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do

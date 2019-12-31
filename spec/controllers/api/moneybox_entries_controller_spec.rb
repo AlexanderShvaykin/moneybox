@@ -21,5 +21,12 @@ describe Api::MoneyboxEntriesController do
       expect(get: "/api/moneyboxes/1")
           .to route_to(controller: "api/moneybox_entries", action: "show", id: "1")
     end
+
+    subject(:get_record) { get :show, params: Hash[id: moneybox.id] }
+    let_it_be(:moneybox) { create :moneybox }
+
+    it "returns record" do
+      expect(subject.body).to include_json(id: moneybox.id)
+    end
   end
 end
