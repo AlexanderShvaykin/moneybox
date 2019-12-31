@@ -13,5 +13,9 @@ module Api
     def update
       render_result(Moneyboxes::UpdateOperation.new(**params).call)
     end
+
+    def destroy
+      render_result(Moneyboxes::DestroyOperation.new(**params).call)
+    end
   end
 end
