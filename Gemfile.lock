@@ -215,6 +215,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    test-prof (0.10.1)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.6)
@@ -244,6 +245,7 @@ DEPENDENCIES
   rubocop-rspec
   spring
   spring-watcher-listen (~> 2.0.0)
+  test-prof
   tzinfo-data
 
 RUBY VERSION

@@ -36,6 +36,7 @@ group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rspec-rails"
   gem 'rspec-json_expectations'
+  gem "test-prof"
 end
 
 group :development do
