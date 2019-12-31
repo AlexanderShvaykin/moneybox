@@ -12,7 +12,7 @@ describe Api::MoneyboxEntriesController do
     let_it_be(:moneybox) { create :moneybox }
 
     it "returns relation" do
-      expect(subject.body).to include_json(data: UnorderedArray(id: moneybox.id))
+      expect(subject.body).to include_json(UnorderedArray(id: moneybox.id))
     end
   end
 
