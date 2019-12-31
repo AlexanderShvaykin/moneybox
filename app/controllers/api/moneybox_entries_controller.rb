@@ -9,5 +9,9 @@ module Api
     def show
       render_result(FindOperation.new(**params).call(MoneyboxEntry))
     end
+
+    def update
+
+    end
   end
 end

@@ -1,5 +1,5 @@
 describe Moneyboxes::CreateOperation do
-  describe "#call" do
+    describe "#call" do
     subject(:create_model) { described_class.new(params).call }
 
     let(:params) { Hash[name: "Foo"] }
