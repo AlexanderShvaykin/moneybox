@@ -2,6 +2,10 @@
 
 module Api
   class MoneyboxEntriesController < ApplicationController
+    def index
+      render json: { data: MoneyboxEntry.all }
+    end
+
     def create
       render_result(Moneyboxes::CreateOperation.new(**params).call)
     end

@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 describe Api::MoneyboxEntriesController do
+  describe "GET #index" do
+    specify  do
+      expect(get: "/api/moneyboxes")
+          .to route_to(controller: "api/moneybox_entries", action: "index")
+    end
+
+    subject { get :index, format: :as_json }
+
+    let_it_be(:moneybox) { create :moneybox }
+
+    it "returns relation" do
+      expect(subject.body).to include_json(data: UnorderedArray(id: moneybox.id))
+    end
+  end
+
   describe "POST #create" do
     specify  do
       expect(post: "/api/moneyboxes")
