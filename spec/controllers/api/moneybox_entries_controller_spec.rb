@@ -29,4 +29,19 @@ describe Api::MoneyboxEntriesController do
       expect(subject.body).to include_json(id: moneybox.id)
     end
   end
+
+  describe "GET #update" do
+    specify  do
+      expect(patch: "/api/moneyboxes/1")
+          .to route_to(controller: "api/moneybox_entries", action: "update", id: "1")
+    end
+
+    subject { patch :update, params: Hash[id: moneybox.id, name: "Foo123"] }
+    let_it_be(:moneybox) { create :moneybox }
+
+    it "updates and returns record", :aggregate_failures do
+      expect { subject }.to change { moneybox.reload.name }.to("Foo123")
+      expect(response.body).to include_json(id: moneybox.id)
+    end
+  end
 end

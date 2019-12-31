@@ -11,7 +11,7 @@ module Api
     end
 
     def update
-
+      render_result(Moneyboxes::UpdateOperation.new(**params).call)
     end
   end
 end
