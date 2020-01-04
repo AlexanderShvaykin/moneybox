@@ -24,7 +24,7 @@ describe Api::MoneyboxEntriesController do
 
     subject { post :create, params: params, format: :as_json }
 
-    let(:params) { Hash[name: 'Foo'] }
+    let(:params) { Hash[name: "Foo"] }
 
     it "creates moneybox" do
       expect { subject }.to change(MoneyboxEntry, :count).by(1)
@@ -72,7 +72,7 @@ describe Api::MoneyboxEntriesController do
 
     let_it_be(:moneybox) { create :moneybox }
 
-    it 'deletes record' do
+    it "deletes record" do
       expect { subject }.to change(MoneyboxEntry, :count).by(-1)
     end
   end

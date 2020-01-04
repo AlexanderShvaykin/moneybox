@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-require 'dry/monads'
-require 'dry/monads/do'
+
+require "dry/monads"
+require "dry/monads/do"
 
 class ApplicationOperation
   include Dry::Monads[:result, :do]
@@ -18,13 +19,12 @@ class ApplicationOperation
   end
 
   private
-
-  def validate
-    result = validate_schema
-    if result.success?
-      Success(result.to_h)
-    else
-      Failure([:bad_params, result.errors.to_h])
+    def validate
+      result = validate_schema
+      if result.success?
+        Success(result.to_h)
+      else
+        Failure([:bad_params, result.errors.to_h])
+      end
     end
-  end
 end

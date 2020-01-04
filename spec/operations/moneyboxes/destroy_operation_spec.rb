@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Moneyboxes::DestroyOperation do
   describe "#call" do
     subject(:delete_record) { described_class.new(params).call }

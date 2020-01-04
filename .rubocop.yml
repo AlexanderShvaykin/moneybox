@@ -4,3 +4,5 @@ inherit_gem:
     - config/rails.yml
 AllCops:
   TargetRubyVersion: 2.7.0
+  Exclude:
+    - "app/controllers/application_controller.rb" # remove after fix ruby 2.7.0
