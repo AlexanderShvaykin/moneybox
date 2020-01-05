@@ -38,5 +38,6 @@ module Moneybox
     Dir["app/**/*.rb"].each do |f|
       config.autoload_paths << f
     end
+    config.autoload_paths << Rails.root.join("lib")
   end
 end
