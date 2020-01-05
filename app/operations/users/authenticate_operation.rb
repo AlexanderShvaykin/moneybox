@@ -10,7 +10,7 @@ module Users
     def call
       values = yield validate
       user = yield auth_user(values)
-      Success([:ok, user])
+      Success([:ok, JsonWebToken.encode(user_id: user.id)])
     end
 
     private

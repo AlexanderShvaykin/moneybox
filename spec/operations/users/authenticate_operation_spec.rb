@@ -8,14 +8,15 @@ describe Users::AuthenticateOperation do
     let(:password) { "secret" }
 
     describe "unit tests" do
-      let(:user) { instance_double(User, authenticate: true) }
+      let(:user) { instance_double(User, authenticate: true, id: 123) }
 
       before do
         allow(User).to receive(:find_by).with(email: "test@moneybox.org").and_return(user)
+        allow(JsonWebToken).to receive(:encode).with(user_id: 123).and_return("some_token")
       end
 
       it "returns ok code and user" do
-        expect(subject.value!).to eq [:ok, user]
+        expect(subject.value!).to eq [:ok, "some_token"]
       end
 
       context "without email" do
