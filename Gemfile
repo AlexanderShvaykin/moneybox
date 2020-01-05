@@ -49,7 +49,7 @@ group :development do
   gem "rubocop", require: false
   gem "rubocop-rails_config", require: false
   gem "rubocop-rspec", require: false
-  gem 'pry-rails'
+  gem "pry-rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
