@@ -27,7 +27,7 @@ class AuthorizeApiOperation < ApplicationOperation
 
   def http_auth_header
     if @headers["Authorization"].present?
-      Success(@headers["Authorization"].strip)
+      Success(@headers["Authorization"].split(" ").last)
     else
       Failure([:unauthorized, "Missing token"])
     end
