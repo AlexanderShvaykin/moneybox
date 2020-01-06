@@ -11,6 +11,8 @@ describe Api::MoneyboxEntriesController do
 
     let_it_be(:moneybox) { create :moneybox }
 
+    it_behaves_like "auth require"
+
     it "returns relation" do
       expect(subject.body).to include_json(UnorderedArray(id: moneybox.id))
     end
