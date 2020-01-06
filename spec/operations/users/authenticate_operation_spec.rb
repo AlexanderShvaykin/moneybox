@@ -23,7 +23,7 @@ describe Users::AuthenticateOperation do
         let(:params) { Hash[password: password] }
 
         it "returns error and payload" do
-          expect(subject.failure).to contain_exactly :bad_params, instance_of(Hash)
+          expect(subject.failure).to contain_exactly :bad_request, instance_of(Hash)
         end
       end
 

@@ -25,7 +25,7 @@ class ApplicationOperation
     if result.success?
       Success(result.to_h)
     else
-      Failure([:bad_params, result.errors.to_h])
+      Failure([:bad_request, result.errors.to_h])
     end
   end
 end
