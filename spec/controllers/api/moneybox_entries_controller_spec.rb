@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Api::MoneyboxEntriesController do
+describe Api::MoneyboxEntriesController, :with_auth_user do
   describe "GET #index" do
     specify  do
       expect(get: "/api/moneyboxes")
@@ -28,6 +28,8 @@ describe Api::MoneyboxEntriesController do
 
     let(:params) { Hash[name: "Foo"] }
 
+    it_behaves_like "auth require"
+
     it "creates moneybox" do
       expect { subject }.to change(MoneyboxEntry, :count).by(1)
     end
@@ -42,6 +44,8 @@ describe Api::MoneyboxEntriesController do
     subject(:get_record) { get :show, params: Hash[id: moneybox.id] }
 
     let_it_be(:moneybox) { create :moneybox }
+
+    it_behaves_like "auth require"
 
     it "returns record" do
       expect(subject.body).to include_json(id: moneybox.id)
@@ -58,6 +62,8 @@ describe Api::MoneyboxEntriesController do
 
     let_it_be(:moneybox) { create :moneybox }
 
+    it_behaves_like "auth require"
+
     it "updates and returns record", :aggregate_failures do
       expect { subject }.to change { moneybox.reload.name }.to("Foo123")
       expect(response.body).to include_json(id: moneybox.id)
@@ -73,6 +79,8 @@ describe Api::MoneyboxEntriesController do
     subject { delete :destroy, params: Hash[id: moneybox.id] }
 
     let_it_be(:moneybox) { create :moneybox }
+
+    it_behaves_like "auth require"
 
     it "deletes record" do
       expect { subject }.to change(MoneyboxEntry, :count).by(-1)
