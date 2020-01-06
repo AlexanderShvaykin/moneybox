@@ -16,7 +16,7 @@ describe Users::AuthenticateOperation do
       end
 
       it "returns ok code and user" do
-        expect(subject.value!).to eq [:ok, "some_token"]
+        expect(subject.value!).to eq [:ok, token: "some_token"]
       end
 
       context "without email" do
