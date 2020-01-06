@@ -22,4 +22,4 @@
 /config/master.key
 .idea
 **/*.keep
-config/database.yml
+/config/database.yml
