@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Moneyboxes
   class IndexOperation < ApplicationOperation
     def call

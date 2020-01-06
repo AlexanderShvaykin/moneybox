@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-require 'dry/monads'
-require 'dry/monads/do'
+
+require "dry/monads"
+require "dry/monads/do"
 
 class ApplicationOperation
   include Dry::Monads[:result, :do]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMoneyboxEntries < ActiveRecord::Migration[6.0]
   def change
     create_table :moneybox_entries do |t|

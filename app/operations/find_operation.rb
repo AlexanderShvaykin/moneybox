@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FindOperation < ApplicationOperation
   def call(repo)
     entry = repo.find_by(id: params[:id])

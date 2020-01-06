@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Moneyboxes::UpdateOperation do
   describe "#call" do
     subject(:update_model) { described_class.new(params).call }

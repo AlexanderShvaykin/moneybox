@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe FindOperation do
   describe "#call" do
     subject(:find_record) { described_class.new({}).call(repo) }

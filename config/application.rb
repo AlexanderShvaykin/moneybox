@@ -1,4 +1,6 @@
-require_relative 'boot'
+# frozen_string_literal: true
+
+require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
@@ -36,5 +38,6 @@ module Moneybox
     Dir["app/**/*.rb"].each do |f|
       config.autoload_paths << f
     end
+    config.autoload_paths << Rails.root.join("lib")
   end
 end
