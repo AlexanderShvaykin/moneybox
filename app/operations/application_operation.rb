@@ -19,12 +19,13 @@ class ApplicationOperation
   end
 
   private
-    def validate
-      result = validate_schema
-      if result.success?
-        Success(result.to_h)
-      else
-        Failure([:bad_params, result.errors.to_h])
-      end
+
+  def validate
+    result = validate_schema
+    if result.success?
+      Success(result.to_h)
+    else
+      Failure([:bad_params, result.errors.to_h])
     end
+  end
 end
