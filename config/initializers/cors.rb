@@ -17,7 +17,7 @@
 # end
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:8080', 'localhost', 'moneybox-clien.herokuapp.com'
+    origins 'localhost:8080', 'localhost', 'moneybox.onrender.com'
 
     resource '*',
              headers: :any,
