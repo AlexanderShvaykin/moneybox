@@ -7,7 +7,7 @@ module Moneyboxes
     end
 
     def call
-      values = yield validate
+      values = yield validate_schema
       moneybox = yield save(values)
 
       Success([:created, moneybox])

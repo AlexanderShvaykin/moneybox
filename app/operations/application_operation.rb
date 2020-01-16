@@ -14,18 +14,13 @@ class ApplicationOperation
 
   def self.schema(**options, &block)
     define_method(:validate_schema) do
-      Dry::Schema.Params(**options, &block).call(params)
-    end
-  end
+      result = Dry::Schema.Params(**options, &block).call(params)
 
-  private
-
-  def validate
-    result = validate_schema
-    if result.success?
-      Success(result.to_h)
-    else
-      Failure([:bad_request, result.errors.to_h])
+      if result.success?
+        Success(result.to_h)
+      else
+        Failure([:bad_request, result.errors.to_h])
+      end
     end
   end
 end
