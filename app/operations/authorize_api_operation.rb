@@ -17,19 +17,19 @@ class AuthorizeApiOperation < ApplicationOperation
 
   def load_user(decoded_token)
     user = User.find_by(id: decoded_token[:user_id])
-    user.nil? ? Failure([:unauthorized, "User doesn't exist"]) : Success(user)
+    user.nil? ? Failure([:unauthorized, [message: "User doesn't exist"]]) : Success(user)
   end
 
   def decode_token(header)
     token = JsonWebToken.decode(header)
-    token.present? ? Success(token) : Failure([:unauthorized, "Invalid token"])
+    token.present? ? Success(token) : Failure([:unauthorized, [message: "Invalid token"]])
   end
 
   def http_auth_header
     if @headers["Authorization"].present?
       Success(@headers["Authorization"].split(" ").last)
     else
-      Failure([:unauthorized, "Missing token"])
+      Failure([:unauthorized,[message: "Missing token"]])
     end
   end
 end

@@ -19,7 +19,7 @@ describe AuthorizeApiOperation do
       let(:token) { "123" }
 
       it "returns error and payload" do
-        expect(subject.failure).to eq [:unauthorized, "Invalid token"]
+        expect(subject.failure).to eq [:unauthorized, [message:  "Invalid token"]]
       end
     end
 
@@ -27,7 +27,7 @@ describe AuthorizeApiOperation do
       let(:headers) { Hash[] }
 
       it "returns error and payload" do
-        expect(subject.failure).to eq [:unauthorized, "Missing token"]
+        expect(subject.failure).to eq [:unauthorized,[message:   "Missing token"]]
       end
     end
 
@@ -39,7 +39,7 @@ describe AuthorizeApiOperation do
       end
 
       it "returns error and payload" do
-        expect(subject.failure).to eq [:unauthorized, "User doesn't exist"]
+        expect(subject.failure).to eq [:unauthorized, [message: "User doesn't exist"]]
       end
     end
   end
