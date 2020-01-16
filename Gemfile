@@ -31,6 +31,8 @@ gem "rack-cors", "~> 1.1"
 gem "dry-monads"
 gem "dry-schema"
 gem "jwt", "~> 2.2"
+gem "oj", "~> 3.10"
+gem 'fast_jsonapi'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -55,3 +57,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
