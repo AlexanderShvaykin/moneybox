@@ -15,7 +15,8 @@ module Moneyboxes
     end
 
     def save(record, values)
-      record.update(values) ? Success(record) : Failure([:unprocessable_entity, record.errors])
+      record.update!(values)
+      Success(record)
     end
   end
 end

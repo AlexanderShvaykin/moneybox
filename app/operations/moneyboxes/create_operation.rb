@@ -14,9 +14,7 @@ module Moneyboxes
     end
 
     def save(values)
-      MoneyboxEntry.new(values).then do |entity|
-        entity.save ? Success(entity) : Failure([:unprocessable_entity, entity.errors])
-      end
+      Success(MoneyboxEntry.create!(values))
     end
   end
 end

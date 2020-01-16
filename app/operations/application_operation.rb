@@ -19,8 +19,12 @@ class ApplicationOperation
       if result.success?
         Success(result.to_h)
       else
-        Failure([:bad_request, result.errors.to_h])
+        Failure([:bad_request, map_schema_errors(result.errors)])
       end
+    end
+
+    def map_schema_errors(errors)
+      errors.to_h.map { |k, v| { title: "#{k}: #{v.join(' ,')}" } }
     end
   end
 end

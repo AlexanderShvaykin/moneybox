@@ -13,7 +13,7 @@ describe Moneyboxes::DestroyOperation do
     end
 
     it "delete record" do
-      expect(record).to receive(:delete)
+      expect(record).to receive(:destroy!)
       delete_record
     end
 
@@ -23,27 +23,17 @@ describe Moneyboxes::DestroyOperation do
       end
 
       it "returns not_found code and record" do
-        expect(subject.failure).to contain_exactly :not_found, instance_of(Hash)
+        expect(subject.failure).to contain_exactly :not_found, instance_of(Array)
       end
     end
 
     context "with mock update" do
       before do
-        allow(record).to receive(:delete).and_return(true)
+        allow(record).to receive(:destroy!).and_return(true)
       end
 
       it "returns ok code and record" do
         expect(subject.value!).to eq [:ok, ""]
-      end
-
-      context "with fail update" do
-        before do
-          allow(record).to receive(:delete).and_return(false)
-        end
-
-        it "returns error code and payload" do
-          expect(subject.failure).to eq [:unprocessable_entity, record.errors]
-        end
       end
     end
   end

@@ -15,7 +15,7 @@ describe FindOperation do
       let(:record) { nil }
 
       it "returns error and payload" do
-        expect(subject.failure).to contain_exactly :not_found, instance_of(Hash)
+        expect(subject.failure).to contain_exactly :not_found, instance_of(Array)
       end
     end
   end

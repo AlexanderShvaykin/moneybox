@@ -13,27 +13,17 @@ describe Moneyboxes::UpdateOperation do
     end
 
     it "update record" do
-      expect(record).to receive(:update).with(name: "Foo")
+      expect(record).to receive(:update!).with(name: "Foo")
       update_model
     end
 
     context "with mock update" do
       before do
-        allow(record).to receive(:update).and_return(true)
+        allow(record).to receive(:update!).and_return(true)
       end
 
       it "returns ok code and record" do
         expect(subject.value!).to eq [:ok, record]
-      end
-
-      context "with fail update" do
-        before do
-          allow(record).to receive(:update).and_return(false)
-        end
-
-        it "returns ok code and record" do
-          expect(subject.failure).to eq [:unprocessable_entity, record.errors]
-        end
       end
     end
 
@@ -43,7 +33,7 @@ describe Moneyboxes::UpdateOperation do
       end
 
       it "returns not_found code and record" do
-        expect(subject.failure).to contain_exactly :not_found, instance_of(Hash)
+        expect(subject.failure).to contain_exactly :not_found, instance_of(Array)
       end
     end
 
@@ -51,7 +41,7 @@ describe Moneyboxes::UpdateOperation do
       let(:params) { Hash[name: "", id: id] }
 
       it "returns error and payload" do
-        expect(subject.failure).to contain_exactly :bad_request, instance_of(Hash)
+        expect(subject.failure).to contain_exactly :bad_request, instance_of(Array)
       end
     end
   end
