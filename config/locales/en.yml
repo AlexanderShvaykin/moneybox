@@ -1,2 +1,4 @@
 en:
-  main_error: "Application Error"
+  errors:
+    main_error: "Application Error"
+    not_found: "Record not found"
