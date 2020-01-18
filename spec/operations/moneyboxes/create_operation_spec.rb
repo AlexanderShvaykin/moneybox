@@ -2,17 +2,15 @@
 
 describe Moneyboxes::CreateOperation do
   describe "#call" do
-  subject(:create_model) { described_class.new(params).call }
+  subject(:create_model) { described_class.new(user: user, **params).call }
 
   let(:params) { Hash[name: "Foo"] }
   let(:model) { instance_double(MoneyboxEntry, errors: []) }
-
-  before do
-    allow(MoneyboxEntry).to receive(:create!).with(params).and_return(model)
-  end
+  let(:user) { instance_double(User, moneybox_entries: mock_repo) }
+  let(:mock_repo) { class_double(MoneyboxEntry, create!: model) }
 
   it "saves model" do
-    expect(MoneyboxEntry).to receive(:create!).with(params)
+    expect(mock_repo).to receive(:create!).with(params)
     create_model
   end
 
@@ -24,7 +22,7 @@ describe Moneyboxes::CreateOperation do
     let(:params) { Hash[] }
 
     it "doesn't save model" do
-      expect(MoneyboxEntry).not_to receive(:create!)
+      expect(mock_repo).not_to receive(:create!)
       create_model
     end
 
@@ -37,7 +35,7 @@ describe Moneyboxes::CreateOperation do
     let(:params) { Hash[name: ""] }
 
     it "doesn't save model" do
-      expect(model).not_to receive(:save)
+      expect(mock_repo).not_to receive(:create!)
       create_model
     end
 

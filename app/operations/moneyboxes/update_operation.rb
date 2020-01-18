@@ -8,7 +8,7 @@ module Moneyboxes
 
     def call
       values = yield validate_schema
-      find_result = yield ::FindOperation.new(params).call(MoneyboxEntry)
+      find_result = yield ::FindOperation.new(id: params[:id]).call(user.moneybox_entries)
       moneybox = yield save(find_result.last, values)
 
       Success([:ok, moneybox])

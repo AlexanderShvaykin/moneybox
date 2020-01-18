@@ -6,9 +6,10 @@ require "dry/monads/do"
 class ApplicationOperation
   include Dry::Monads[:result, :do]
 
-  attr_reader :params
+  attr_reader :params, :user
 
-  def initialize(params)
+  def initialize(user: nil, **params)
+    @user   = user
     @params = params.with_indifferent_access.freeze
   end
 
