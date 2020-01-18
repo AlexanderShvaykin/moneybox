@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-describe Moneyboxes::DestroyOperation do
+describe DestroyOperation do
   describe "#call" do
-    subject(:delete_record) { described_class.new(params).call }
+    subject(:delete_record) { described_class.new(params).call(mock_repo) }
 
     let(:params) { Hash[name: "Foo", id: id] }
     let(:record) { build_stubbed :moneybox }
     let(:id) { 1 }
+    let(:mock_repo) { class_double(MoneyboxEntry, find_by: record) }
 
     before do
-      allow(MoneyboxEntry).to receive(:find_by).with(id: id).and_return(record)
+      allow(mock_repo).to receive(:find_by).with(id: id).and_return(record)
     end
 
     it "delete record" do
@@ -19,7 +20,7 @@ describe Moneyboxes::DestroyOperation do
 
     context "with not found" do
       before do
-        allow(MoneyboxEntry).to receive(:find_by).with(id: id).and_return(nil)
+        allow(mock_repo).to receive(:find_by).with(id: id).and_return(nil)
       end
 
       it "returns not_found code and record" do
