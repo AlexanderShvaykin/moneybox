@@ -1,0 +1,34 @@
+ru:
+  dry_schema:
+    errors:
+      size?:
+        arg:
+          default: "размер должен быть %{num}"
+          range: "размер должен быть в пределах %{left} - %{right}"
+
+        value:
+          string:
+            arg:
+              default: "длина должна быть %{num}"
+              range: "длина должен быть в пределах %{left} - %{right}"
+
+      filled?: "не может быть пустым"
+
+      included_in?: "должно быть одним из %{list}"
+      excluded_from?: "не должен быть одним из: %{list}"
+
+      rules:
+        email:
+          filled?: "Email не полжен быть пустым"
+          key?: "Email обязательный параметр"
+        name:
+          filled?: "Имя не полжен быть пустым"
+          key?: "Имя обязательный параметр"
+
+        user:
+          filled?: "Не может быть пустым"
+
+          rules:
+            address:
+              filled?: "Ты должен сказать нам, где ты живешь"
+

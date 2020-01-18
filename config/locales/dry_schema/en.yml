@@ -1,0 +1,34 @@
+en:
+  dry_schema:
+    errors:
+      size?:
+        arg:
+          default: "size must be %{num}"
+          range: "size must be within %{left} - %{right}"
+
+        value:
+          string:
+            arg:
+              default: "length must be %{num}"
+              range: "length must be within %{left} - %{right}"
+
+      filled?: "must be filled"
+
+      included_in?: "must be one of %{list}"
+      excluded_from?: "must not be one of: %{list}"
+
+      rules:
+        email:
+          filled?: "the email is missing"
+          key?: "the email is missing"
+        name:
+          filled?: "the name is missing"
+          key?: "the name is missing"
+
+        user:
+          filled?: "name cannot be blank"
+
+          rules:
+            address:
+              filled?: "You gotta tell us where you live"
+
