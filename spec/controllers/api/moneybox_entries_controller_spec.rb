@@ -14,7 +14,7 @@ describe Api::MoneyboxEntriesController, :with_auth_user do
     it_behaves_like "auth require"
 
     it "returns relation" do
-      expect(subject.body).to include_json(UnorderedArray(id: moneybox.id))
+      expect(subject.body).to include_json(data: UnorderedArray(id: moneybox.id.to_s))
     end
   end
 
@@ -48,7 +48,7 @@ describe Api::MoneyboxEntriesController, :with_auth_user do
     it_behaves_like "auth require"
 
     it "returns record" do
-      expect(subject.body).to include_json(id: moneybox.id)
+      expect(subject.body).to include_json(data: { id: moneybox.id.to_s })
     end
   end
 
@@ -67,7 +67,7 @@ describe Api::MoneyboxEntriesController, :with_auth_user do
 
     it "updates and returns record", :aggregate_failures do
       expect { subject }.to change { moneybox.reload.name }.to("Foo123")
-      expect(response.body).to include_json(id: moneybox.id)
+      expect(response.body).to include_json(data: { id: moneybox.id.to_s })
     end
 
     context "with empty name" do

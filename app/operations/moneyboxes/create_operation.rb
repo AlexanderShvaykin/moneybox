@@ -7,16 +7,14 @@ module Moneyboxes
     end
 
     def call
-      values = yield validate
+      values = yield validate_schema
       moneybox = yield save(values)
 
       Success([:created, moneybox])
     end
 
     def save(values)
-      MoneyboxEntry.new(values).then do |entity|
-        entity.save ? Success(entity) : Failure([:unprocessable_entity, entity.errors])
-      end
+      Success(MoneyboxEntry.create!(values))
     end
   end
 end

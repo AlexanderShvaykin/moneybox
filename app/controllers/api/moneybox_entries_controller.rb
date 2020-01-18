@@ -3,23 +3,31 @@
 module Api
   class MoneyboxEntriesController < ApplicationController
     def index
-      render_result(Moneyboxes::IndexOperation.new(**params).call)
+      run_operation(Moneyboxes::IndexOperation.new(**params).call) do |boxes|
+        render json: MoneyboxSerializer.new(boxes, is_collection: true)
+      end
     end
 
     def create
-      render_result(Moneyboxes::CreateOperation.new(**params).call)
+      run_operation(Moneyboxes::CreateOperation.new(**params).call) do |box, status|
+        render json: MoneyboxSerializer.new(box), status: status
+      end
     end
 
     def show
-      render_result(FindOperation.new(**params).call(MoneyboxEntry))
+      run_operation(FindOperation.new(**params).call(MoneyboxEntry)) do |box|
+        render json: MoneyboxSerializer.new(box)
+      end
     end
 
     def update
-      render_result(Moneyboxes::UpdateOperation.new(**params).call)
+      run_operation(Moneyboxes::UpdateOperation.new(**params).call) do |box|
+        render json: MoneyboxSerializer.new(box)
+      end
     end
 
     def destroy
-      render_result(Moneyboxes::DestroyOperation.new(**params).call)
+      run_operation(Moneyboxes::DestroyOperation.new(**params).call)
     end
   end
 end

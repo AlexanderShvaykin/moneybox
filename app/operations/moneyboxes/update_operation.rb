@@ -7,7 +7,7 @@ module Moneyboxes
     end
 
     def call
-      values = yield validate
+      values = yield validate_schema
       find_result = yield ::FindOperation.new(params).call(MoneyboxEntry)
       moneybox = yield save(find_result.last, values)
 
@@ -15,7 +15,8 @@ module Moneyboxes
     end
 
     def save(record, values)
-      record.update(values) ? Success(record) : Failure([:unprocessable_entity, record.errors])
+      record.update!(values)
+      Success(record)
     end
   end
 end

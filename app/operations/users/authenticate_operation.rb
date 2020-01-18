@@ -8,7 +8,7 @@ module Users
     end
 
     def call
-      values = yield validate
+      values = yield validate_schema
       user = yield auth_user(values)
       Success([:ok, token: JsonWebToken.encode(user_id: user.id)])
     end

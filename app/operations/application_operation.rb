@@ -14,18 +14,17 @@ class ApplicationOperation
 
   def self.schema(**options, &block)
     define_method(:validate_schema) do
-      Dry::Schema.Params(**options, &block).call(params)
+      result = Dry::Schema.Params(**options, &block).call(params)
+
+      if result.success?
+        Success(result.to_h)
+      else
+        Failure([:bad_request, map_schema_errors(result.errors)])
+      end
     end
-  end
 
-  private
-
-  def validate
-    result = validate_schema
-    if result.success?
-      Success(result.to_h)
-    else
-      Failure([:bad_request, result.errors.to_h])
+    def map_schema_errors(errors)
+      errors.to_h.map { |k, v| { title: "#{k}: #{v.join(' ,')}" } }
     end
   end
 end

@@ -11,18 +11,21 @@ class ApplicationController < ActionController::API
 
   private
 
-  def render_result(result)
+  def run_operation(result)
     case result
     in Dry::Monads::Result::Success[(Integer | Symbol) => status, entity]
-      render json: entity, status: status
-    in Dry::Monads::Result::Failure[(Integer | Symbol) => status, ActiveModel::Errors => errors]
-      render json: [errors: errors.to_h], status: status
-    in Dry::Monads::Result::Failure[(Integer | Symbol) => status, Hash => payload]
-      render json: {errors: payload}, status: status
-    in Dry::Monads::Result::Failure[(Integer | Symbol) => status, String => message]
-      render json: {message: message}, status: status
+      block_given? ? yield(entity, status) : render(json: entity, status: status)
+    in Dry::Monads::Result::Failure[(Integer | Symbol) => status, Array => errors]
+      render json: { errors: serialize_errors(errors) }, status: status
     else
       raise ArgumentError, "invalid operation result"
+    end
+  end
+
+  def serialize_errors(errors)
+    errors.map do |e|
+      { title: e.fetch(:title, I18n.t("errors.main_error")) }
+          .merge(Hash[message: e[:message]].compact)
     end
   end
 
@@ -33,7 +36,7 @@ class ApplicationController < ActionController::API
     if result.success?
       @current_user = result.value!.last
     else
-      render_result(result)
+      run_operation(result)
     end
   end
   alias_method :authenticate_request, :current_user
