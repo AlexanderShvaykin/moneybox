@@ -9,7 +9,8 @@ module Api
     end
 
     def create
-      run_operation(Moneyboxes::CreateOperation.new(**params).call) do |box, status|
+      operation = Moneyboxes::CreateOperation.new(user: current_user, **params)
+      run_operation(operation.call) do |box, status|
         render json: MoneyboxSerializer.new(box), status: status
       end
     end

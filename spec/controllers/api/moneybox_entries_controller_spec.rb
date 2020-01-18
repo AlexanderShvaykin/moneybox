@@ -31,7 +31,7 @@ describe Api::MoneyboxEntriesController, :with_auth_user do
     it_behaves_like "auth require"
 
     it "creates moneybox" do
-      expect { subject }.to change(MoneyboxEntry, :count).by(1)
+      expect { subject }.to change(user.moneybox_entries, :count).by(1)
     end
   end
 

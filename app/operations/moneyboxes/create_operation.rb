@@ -14,7 +14,7 @@ module Moneyboxes
     end
 
     def save(values)
-      Success(MoneyboxEntry.create!(values))
+      Success(user.moneybox_entries.create!(values))
     end
   end
 end
