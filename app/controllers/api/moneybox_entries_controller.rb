@@ -16,13 +16,14 @@ module Api
     end
 
     def show
-      run_operation(FindOperation.new(**params).call(MoneyboxEntry)) do |box|
+      run_operation(FindOperation.new(**params).call(current_user.moneybox_entries)) do |box|
         render json: MoneyboxSerializer.new(box)
       end
     end
 
     def update
-      run_operation(Moneyboxes::UpdateOperation.new(**params).call) do |box|
+      operation = Moneyboxes::UpdateOperation.new(user: current_user, **params)
+      run_operation(operation.call) do |box|
         render json: MoneyboxSerializer.new(box)
       end
     end

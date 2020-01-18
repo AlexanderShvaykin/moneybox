@@ -8,7 +8,7 @@ class ApplicationOperation
 
   attr_reader :params, :user
 
-  def initialize(user:, **params)
+  def initialize(user: nil, **params)
     @user   = user
     @params = params.with_indifferent_access.freeze
   end
