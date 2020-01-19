@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Avoid CORS issues when API is called from the frontend app.
@@ -17,9 +18,9 @@
 # end
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:8080', 'localhost', 'moneybox.onrender.com'
+    origins "localhost:8080", "localhost", "moneybox.onrender.com"
 
-    resource '*',
+    resource "*",
              headers: :any,
              methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end

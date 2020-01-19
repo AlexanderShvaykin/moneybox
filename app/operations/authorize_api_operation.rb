@@ -29,7 +29,7 @@ class AuthorizeApiOperation < ApplicationOperation
     if @headers["Authorization"].present?
       Success(@headers["Authorization"].split(" ").last)
     else
-      Failure([:unauthorized,[message: "Missing token"]])
+      Failure([:unauthorized, [message: "Missing token"]])
     end
   end
 end
