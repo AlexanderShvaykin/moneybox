@@ -55,6 +55,8 @@ group :development do
   gem "rubocop-rails_config", require: false
   gem "rubocop-rspec", require: false
   gem "pry-rails"
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
