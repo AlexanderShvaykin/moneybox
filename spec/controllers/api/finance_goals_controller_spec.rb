@@ -54,5 +54,20 @@ describe Api::FinanceGoalsController, :with_auth_user do
         expect(subject.code).to eq "404"
       end
     end
+
+    context "with invalid params value" do
+      let(:params) do
+        {
+            payment_amount: 100,
+            income_amount: 100,
+            started_at: 2.month.from_now.to_i,
+            finished_at: 1.month.from_now.to_i
+        }
+      end
+
+      it "returns 422" do
+        expect(subject.code).to eq "422"
+      end
+    end
   end
 end
