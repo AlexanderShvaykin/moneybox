@@ -2,5 +2,5 @@
 
 class MoneyboxEntry < ApplicationRecord
   belongs_to :user
-  has_many :finance_goal
+  has_many :finance_goals
 end

@@ -7,7 +7,7 @@ class FindOperation < ApplicationOperation
     if entry
       Success([:ok, entry])
     else
-      Failure([:not_found, Array(title: I18n.t("errors.not_found"))])
+      Failure([:not_found, [title: I18n.t("errors.not_found")]])
     end
   end
 end
