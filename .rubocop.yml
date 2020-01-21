@@ -6,7 +6,8 @@ AllCops:
   TargetRubyVersion: 2.7.0
   Exclude:
     - "app/controllers/application_controller.rb" # remove after fix ruby 2.7.0
-    - "bin/**/*" # remove after fix ruby 2.7.0
+    - "bin/**/*"
+    - "Guardfile"
 
 Layout/EmptyLinesAroundAccessModifier:
   Enabled: false
