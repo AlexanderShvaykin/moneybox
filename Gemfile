@@ -33,6 +33,7 @@ gem "dry-schema"
 gem "jwt", "~> 2.2"
 gem "oj", "~> 3.10"
 gem "fast_jsonapi"
+gem 'active_model_attributes'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
