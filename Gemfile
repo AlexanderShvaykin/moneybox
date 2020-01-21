@@ -43,6 +43,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "pry-byebug"
+  gem 'spring-commands-rspec'
 end
 
 group :development do
