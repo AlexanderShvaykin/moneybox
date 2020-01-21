@@ -4,10 +4,11 @@ describe FinanceGoals::CreateOperation do
   describe "#call" do
     subject { described_class.new(params).call(repo) }
 
-    let(:monexbox) { instance_double(MoneyboxEntry, finance_goals: goals) }
-    let(:record) { instance_double(FinanceGoal) }
     let(:repo) { class_double(MoneyboxEntry, find_by: monexbox, create!: record) }
-    let(:goals) { class_double(FinanceGoal, create!: record) }
+    let(:monexbox) { instance_double(MoneyboxEntry, finance_goals: goals) }
+    let(:goals) { double(build: record) }
+    let(:record) { instance_double(FinanceGoal) }
+    let(:form) { instance_double(FinanceGoalForm, save: true, goal: record) }
     let(:params) do
       {
           payment_amount: 100,
@@ -17,10 +18,14 @@ describe FinanceGoals::CreateOperation do
       }
     end
 
+    before do
+      allow(FinanceGoalForm).to receive(:new).with(goal: record, **params).and_return(form)
+    end
+
     it_behaves_like "calls find_operation"
 
     it "creates moneybox" do
-      expect(goals).to receive(:create!).with(params)
+      expect(form).to receive(:save)
       subject
     end
 
@@ -35,7 +40,7 @@ describe FinanceGoals::CreateOperation do
       end
 
       it "doesn't create moneybox" do
-        expect(goals).not_to receive(:create!).with(params)
+        expect(form).not_to receive(:save)
         subject
       end
     end

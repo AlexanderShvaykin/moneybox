@@ -16,6 +16,10 @@ class ApplicationForm
     true
   end
 
+  def serialized_errors
+    errors.full_messages.map { |msg| Hash[title: msg] }
+  end
+
   private
 
   def persist!

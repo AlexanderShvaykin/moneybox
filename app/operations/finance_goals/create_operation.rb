@@ -12,8 +12,20 @@ module FinanceGoals
     def call(repo)
       find_result = yield ::FindOperation.new(id: params[:moneybox_id]).call(repo)
       values = yield validate_schema
+      record = yield save_record(find_result.last, values)
 
-      find_result.last.finance_goals.create!(values)
+      Success([:created, record])
+    end
+
+    private
+
+    def save_record(moneybox, values)
+      form = FinanceGoalForm.new(goal: moneybox.finance_goals.build, **values)
+      if form.save
+        Success(form.goal)
+      else
+        Failure([:unprocessable_entity, form.serialized_errors])
+      end
     end
   end
 end
