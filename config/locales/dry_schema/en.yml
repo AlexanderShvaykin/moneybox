@@ -1,6 +1,11 @@
 en:
   dry_schema:
     errors:
+      int?: "must be a number"
+      filled?: "can't be empty"
+      key?: "required parameter"
+      included_in?: "must be one of the %{list}"
+      excluded_from?: "must not be one of the: %{list}"
       size?:
         arg:
           default: "size must be %{num}"
@@ -11,24 +16,4 @@ en:
             arg:
               default: "length must be %{num}"
               range: "length must be within %{left} - %{right}"
-
-      filled?: "must be filled"
-
-      included_in?: "must be one of %{list}"
-      excluded_from?: "must not be one of: %{list}"
-
-      rules:
-        email:
-          filled?: "the email is missing"
-          key?: "the email is missing"
-        name:
-          filled?: "the name is missing"
-          key?: "the name is missing"
-
-        user:
-          filled?: "name cannot be blank"
-
-          rules:
-            address:
-              filled?: "You gotta tell us where you live"
 
