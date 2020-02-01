@@ -3,8 +3,8 @@
 module FinanceGoals
   class CreateOperation < ApplicationOperation
     schema do
-      required(:payment_amount).value(:integer)
-      required(:income_amount).value(:integer)
+      optional(:payment_amount).value(:integer)
+      optional(:income_amount).value(:integer)
       required(:started_at).value(:integer)
       required(:finished_at).value(:integer)
     end
