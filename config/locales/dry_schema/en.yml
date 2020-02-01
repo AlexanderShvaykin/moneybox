@@ -2,6 +2,8 @@ en:
   dry_schema:
     errors:
       int?: "must be a number"
+      date?:
+        failure: "invalid date format"
       filled?: "can't be empty"
       key?: "required parameter"
       included_in?: "must be one of the %{list}"
