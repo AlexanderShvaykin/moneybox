@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class FinanceGoalForm < ApplicationForm
-  attributes :goal, :payment_amount, :income_amount, :started_at, :finished_at
-  attribute :started_at, :unix_format_time
-  attribute :finished_at, :unix_format_time
+  attributes :goal, :payment_amount, :income_amount
+  attribute :started_at, :date
+  attribute :finished_at, :date
 
-  validates :started_at, :finished_at, numericality: { greater_than_or_equal_to: 1 }
+  validates :started_at, :finished_at, :goal, presence: true
   validate :check_time_difference
 
   private
@@ -22,6 +22,8 @@ class FinanceGoalForm < ApplicationForm
   end
 
   def check_time_difference
+    return if finished_at.nil? || started_at.nil?
+
     errors.add(:finished_at) if finished_at < started_at
   end
 end

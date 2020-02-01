@@ -5,8 +5,8 @@ describe FinanceGoalForm do
     {
         payment_amount: 100,
         income_amount: 100,
-        started_at: Time.current.to_i,
-        finished_at: 1.month.from_now.to_i
+        started_at: Time.current,
+        finished_at: 1.month.from_now
     }
   end
 
@@ -34,8 +34,8 @@ describe FinanceGoalForm do
         {
             payment_amount: 100,
             income_amount: 100,
-            started_at: Time.current.to_i,
-            finished_at: 0
+            started_at: Time.current,
+            finished_at: ""
         }
       end
 
@@ -47,8 +47,8 @@ describe FinanceGoalForm do
         {
             payment_amount: 100,
             income_amount: 100,
-            started_at: 150,
-            finished_at: 100
+            started_at: 2.days.ago,
+            finished_at: 3.days.ago
         }
       end
 
