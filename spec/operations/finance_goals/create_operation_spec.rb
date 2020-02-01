@@ -9,17 +9,22 @@ describe FinanceGoals::CreateOperation do
     let(:goals) { double(build: record) }
     let(:record) { instance_double(FinanceGoal) }
     let(:form) { instance_double(FinanceGoalForm, save: true, goal: record) }
+    let(:started_at) { "2015-01-01" }
+    let(:finished_at) { "2015-02-01" }
     let(:params) do
       {
           payment_amount: 100,
           income_amount: 100,
-          started_at: Time.current.to_i,
-          finished_at: 1.month.from_now.to_i
+          started_at: started_at,
+          finished_at: finished_at
       }
     end
 
     before do
-      allow(FinanceGoalForm).to receive(:new).with(goal: record, **params).and_return(form)
+      allow(FinanceGoalForm).to receive(:new).with(
+        goal: record, payment_amount: 100, income_amount: 100,
+        started_at: Date.parse(started_at), finished_at: Date.parse(finished_at)
+      ).and_return(form)
     end
 
     it_behaves_like "calls find_operation"
@@ -34,7 +39,7 @@ describe FinanceGoals::CreateOperation do
         {
             payment_amount: 100,
             income_amount: 100,
-            started_at: Time.current.to_i,
+            started_at: "2015-01-01",
             finished_at: ""
         }
       end

@@ -33,8 +33,8 @@ gem "dry-schema"
 gem "jwt", "~> 2.2"
 gem "oj", "~> 3.10"
 gem "fast_jsonapi"
-gem 'active_model_attributes'
-gem 'russian'
+gem "active_model_attributes"
+gem "russian"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,7 +45,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "pry-byebug"
-  gem 'spring-commands-rspec'
+  gem "spring-commands-rspec"
 end
 
 group :development do
@@ -57,8 +57,8 @@ group :development do
   gem "rubocop-rails_config", require: false
   gem "rubocop-rspec", require: false
   gem "pry-rails"
-  gem 'guard', require: false
-  gem 'guard-rspec', require: false
+  gem "guard", require: false
+  gem "guard-rspec", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -5,8 +5,8 @@ module FinanceGoals
     schema do
       optional(:payment_amount).value(:integer)
       optional(:income_amount).value(:integer)
-      required(:started_at).value(:integer)
-      required(:finished_at).value(:integer)
+      required(:started_at).value(:date)
+      required(:finished_at).value(:date)
     end
 
     def call(repo)
