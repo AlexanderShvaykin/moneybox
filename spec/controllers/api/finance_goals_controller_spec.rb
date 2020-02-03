@@ -97,4 +97,30 @@ describe Api::FinanceGoalsController, :with_auth_user do
       expect(subject.body).to include_json(data: {id: finance_goal.id.to_s})
     end
   end
+
+  describe "PATCH #destroy" do
+    subject { delete :destroy, params: { id: id } }
+
+    let_it_be(:moneybox) { create :moneybox, user: user }
+    let_it_be(:finance_goal) { create :finance_goal, moneybox: moneybox }
+    let(:id) { finance_goal.id }
+
+    specify  do
+      expect(delete: "/api/finance_goals/1")
+          .to route_to(controller: "api/finance_goals", action: "destroy", id: "1")
+    end
+
+    it "destroys goal" do
+      expect { subject }.to change(FinanceGoal, :count).by(-1)
+    end
+
+    context "with other goal" do
+      let_it_be(:other_goal) { create :finance_goal }
+      let(:id) { other_goal.id }
+
+      it "doesn't destroy goal" do
+        expect { subject }.not_to change(FinanceGoal, :count)
+      end
+    end
+  end
 end
