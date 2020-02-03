@@ -38,8 +38,8 @@ describe Api::FinanceGoalsController, :with_auth_user do
       {
           payment_amount: 100,
           income_amount: 100,
-          started_at: Time.current.to_i,
-          finished_at: 1.month.from_now.to_i
+          started_at: Time.current.iso8601,
+          finished_at: 1.month.from_now.iso8601
       }
     end
 
@@ -60,8 +60,8 @@ describe Api::FinanceGoalsController, :with_auth_user do
         {
             payment_amount: 100,
             income_amount: 100,
-            started_at: 2.month.from_now.to_i,
-            finished_at: 1.month.from_now.to_i
+            started_at: 2.month.from_now.iso8601,
+            finished_at: 1.month.from_now.iso8601
         }
       end
 
