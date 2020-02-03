@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+<% module_namespacing do -%>
+class <%= class_name %>Operation < ApplicationOperation
+  def call
+    # TODO: your code...
+  end
+end
+<% end -%>
