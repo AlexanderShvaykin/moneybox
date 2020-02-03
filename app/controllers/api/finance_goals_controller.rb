@@ -15,5 +15,12 @@ module Api
         render json: FinanceGoalSerializer.new(finance_goal)
       end
     end
+
+    def update
+      operation = FinanceGoals::UpdateOperation.new(**params)
+      run_operation operation.call(FinanceGoal.where(moneybox: current_user.moneybox_entries)) do |finance_goal|
+        render json: FinanceGoalSerializer.new(finance_goal)
+      end
+    end
   end
 end

@@ -70,4 +70,31 @@ describe Api::FinanceGoalsController, :with_auth_user do
       end
     end
   end
+
+  describe "PATCH #update" do
+    subject { patch :update, params: { id: finance_goal.id, **form_params }, as: :json }
+
+    let_it_be(:moneybox) { create :moneybox, user: user }
+    let_it_be(:finance_goal, reload: true) { create :finance_goal, moneybox: moneybox }
+    let(:form_params) do
+      {
+          income_amount: 100,
+          started_at: Time.current.iso8601,
+          finished_at: 1.month.from_now.iso8601
+      }
+    end
+
+    specify  do
+      expect(patch: "/api/finance_goals/1")
+          .to route_to(controller: "api/finance_goals", action: "update", id: "1")
+    end
+
+    it "updates goal" do
+      expect { subject }.to change { finance_goal.reload.income_amount }.to(100)
+    end
+
+    it "returns goal" do
+      expect(subject.body).to include_json(data: {id: finance_goal.id.to_s})
+    end
+  end
 end
