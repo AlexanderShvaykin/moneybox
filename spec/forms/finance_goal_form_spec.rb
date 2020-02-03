@@ -20,6 +20,15 @@ describe FinanceGoalForm do
     it "creates FinanceGoal" do
       expect { subject }.to change(FinanceGoal, :count).by(1)
     end
+
+    context "with goal" do
+      let_it_be(:goal, reload: true) { create :finance_goal, moneybox: moneybox }
+      let(:record) { goal }
+
+      it "updates goal" do
+        expect { subject }.to change { goal.reload.payment_amount }.to(100)
+      end
+    end
   end
 
   describe "validation" do
