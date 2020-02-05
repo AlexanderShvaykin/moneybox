@@ -79,6 +79,7 @@ describe Api::FinanceGoalsController, :with_auth_user do
     let(:form_params) do
       {
           income_amount: 100,
+          payment_amount: nil,
           started_at: Time.current.iso8601,
           finished_at: 1.month.from_now.iso8601
       }
