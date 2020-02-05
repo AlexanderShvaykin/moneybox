@@ -1,0 +1,9 @@
+Description:
+    Generate baseness operation
+
+Example:
+    rails generate operation Thing
+
+    This will create:
+        app/operations/thing_operation.rb
+        spec/operations/thing_operation_spec.rb

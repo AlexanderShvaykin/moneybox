@@ -27,7 +27,7 @@ describe AuthorizeApiOperation do
       let(:headers) { Hash[] }
 
       it "returns error and payload" do
-        expect(subject.failure).to eq [:unauthorized,[message:   "Missing token"]]
+        expect(subject.failure).to eq [:unauthorized, [message:   "Missing token"]]
       end
     end
 
