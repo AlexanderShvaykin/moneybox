@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: login to heroku
+        env:
+          HEROKU_CREDENTIALS_EMAIL: ${{ secrets. HEROKU_CREDENTIALS_EMAIL }}
+          HEROKU_CREDENTIALS_PASSWORD: ${{ secrets. HEROKU_CREDENTIALS_PASSWORD }}
+        run: |
+          sudo apt-get -yqq install heroku
+          heroku login
+          heroku git:remote --app ${{ secrets. HEROKU_APP_NAME }}
+          git push heroku master
