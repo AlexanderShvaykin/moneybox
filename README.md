@@ -1,3 +1,5 @@
+![Ruby](https://github.com/AlexanderShvaykin/moneybox/workflows/Ruby/badge.svg)
+
 ###  Dependents:
 + postgresql 11
 
