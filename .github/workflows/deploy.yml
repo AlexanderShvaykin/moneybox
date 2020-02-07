@@ -9,12 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-  steps:
-    - uses: actions/checkout@v1
-    - name: Login on Heroky
-      env:
-        HEROKU_CREDENTIALS_EMAIL: ${{ secrets. HEROKU_CREDENTIALS_EMAIL }}
-        HEROKU_CREDENTIALS_PASSWORD: ${{ secrets. HEROKU_CREDENTIALS_PASSWORD }}
-      run:
-        - snap install --classic heroku
-        - heroku login
+    steps:
+      - uses: actions/checkout@v1
+      - name: login to heroku
+        env:
+          HEROKU_CREDENTIALS_EMAIL: ${{ secrets. HEROKU_CREDENTIALS_EMAIL }}
+          HEROKU_CREDENTIALS_PASSWORD: ${{ secrets. HEROKU_CREDENTIALS_PASSWORD }}
+        run: |
+          sudo apt-get -yqq install heroku
+          heroku login
