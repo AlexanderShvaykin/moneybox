@@ -15,8 +15,17 @@ jobs:
         env:
           HEROKU_CREDENTIALS_EMAIL: ${{ secrets. HEROKU_CREDENTIALS_EMAIL }}
           HEROKU_CREDENTIALS_PASSWORD: ${{ secrets. HEROKU_CREDENTIALS_PASSWORD }}
+          HEROKU_APP_NAME: ${{ secrets. HEROKU_APP_NAME }}
         run: |
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+              login ${HEROKU_CREDENTIALS_EMAIL}
+              password ${HEROKU_CREDENTIALS_PASSWORD}
+          machine git.heroku.com
+              login ${HEROKU_CREDENTIALS_EMAIL}
+              password ${HEROKU_CREDENTIALS_PASSWORD}
+          EOF
           sudo apt-get -yqq install heroku
-          heroku login
-          heroku git:remote --app ${{ secrets. HEROKU_APP_NAME }}
+          heroku git:remote --app ${HEROKU_APP_NAME}
           git push heroku master
+          echo 'Deploy front'
