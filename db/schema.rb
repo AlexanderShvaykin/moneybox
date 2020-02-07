@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_201616) do
+ActiveRecord::Schema.define(version: 2020_02_07_202903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "expenses", force: :cascade do |t|
+    t.string "name"
+    t.integer "amount"
+    t.bigint "planed_expense_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["planed_expense_id"], name: "index_expenses_on_planed_expense_id"
+  end
 
   create_table "finance_goals", force: :cascade do |t|
     t.integer "payment_amount"
@@ -54,6 +63,7 @@ ActiveRecord::Schema.define(version: 2020_02_07_201616) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "expenses", "planed_expenses"
   add_foreign_key "finance_goals", "moneybox_entries", on_delete: :cascade
   add_foreign_key "moneybox_entries", "users", on_delete: :cascade
   add_foreign_key "planed_expenses", "finance_goals", on_delete: :cascade
