@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: login to heroku
+      - name: install and login heroku
         env:
           HEROKU_CREDENTIALS_EMAIL: ${{ secrets. HEROKU_CREDENTIALS_EMAIL }}
           HEROKU_CREDENTIALS_PASSWORD: ${{ secrets. HEROKU_CREDENTIALS_PASSWORD }}
@@ -27,7 +27,9 @@ jobs:
           EOF
           sudo apt-get -yqq install heroku
           heroku git:remote --app ${HEROKU_APP_NAME}
-          git branch
-          git remote
-          git push heroku HEAD:refs/heads/master
-          echo 'Deploy front'
+      - name: deploy backend
+        run: git push heroku HEAD:refs/heads/master
+      - name: deploy front
+        env:
+          FRON_DEPLOY_URL: ${{ secrets. FRON_DEPLOY_URL }}
+        run: curl ${FRON_DEPLOY_URL}
