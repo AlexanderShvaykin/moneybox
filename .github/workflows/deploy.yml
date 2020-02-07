@@ -28,7 +28,9 @@ jobs:
           sudo apt-get -yqq install heroku
           heroku git:remote --app ${HEROKU_APP_NAME}
       - name: deploy backend
-        run: git push heroku HEAD:refs/heads/master
+        run: |
+          git push heroku HEAD:refs/heads/master
+          heroku run rake db:migrate
       - name: deploy front
         env:
           FRON_DEPLOY_URL: ${{ secrets. FRON_DEPLOY_URL }}
