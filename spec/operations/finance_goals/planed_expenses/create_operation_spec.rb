@@ -6,7 +6,7 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
 
     let(:repo) { class_double(FinanceGoal, find_by: goal) }
     let(:goal) { instance_double(FinanceGoal, planed_expenses: relation, id: 1, update: true) }
-    let(:relation) { class_double(PlanedExpense, build: expense) }
+    let(:relation) { class_double(PlanedExpense, new: expense) }
     let(:expense) { instance_double(PlanedExpense, save: true) }
     let(:params) { Hash[name: "Milk", amount: 100, finance_goal_id: goal.id] }
 
@@ -16,7 +16,7 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
     end
 
     it "builds with params" do
-      expect(relation).to receive(:build).with(params)
+      expect(relation).to receive(:new).with(params)
       run_operation
     end
 
@@ -79,7 +79,7 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
     end
 
     describe "integrations tests" do
-      let_it_be(:goal, reload: true) { create :finance_goal, amount: 100 }
+      let_it_be(:goal, reload: true) { create :finance_goal, payment_amount: 10 }
       let(:repo) { FinanceGoal }
 
       it "creates planed expense" do
@@ -100,7 +100,6 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
           expect { subject }.to not_change(PlanedExpense, :count)
             .and not_change { goal.reload.payment_amount }
         end
-
       end
     end
   end
