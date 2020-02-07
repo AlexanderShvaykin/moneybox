@@ -95,7 +95,7 @@ describe Api::FinanceGoalsController, :with_auth_user do
     end
 
     it "returns goal" do
-      expect(subject.body).to include_json(data: {id: finance_goal.id.to_s})
+      expect(subject.body).to include_json(data: { id: finance_goal.id.to_s })
     end
   end
 

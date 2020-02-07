@@ -8,6 +8,7 @@ AllCops:
     - "app/controllers/application_controller.rb" # remove after fix ruby 2.7.0
     - "bin/**/*"
     - "Guardfile"
+    - "lib/generators/**/*"
 
 Layout/EmptyLinesAroundAccessModifier:
   Enabled: false

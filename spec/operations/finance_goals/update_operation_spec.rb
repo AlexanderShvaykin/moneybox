@@ -22,8 +22,8 @@ describe FinanceGoals::UpdateOperation do
     before do
       allow(repo).to receive(:find_by).with(id: id).and_return(goal)
       allow(FinanceGoalForm).to receive(:new).with(
-          goal: goal, payment_amount: 100, income_amount: 100,
-          started_at: Date.parse(started_at), finished_at: Date.parse(finished_at)
+        goal: goal, payment_amount: 100, income_amount: 100,
+        started_at: Date.parse(started_at), finished_at: Date.parse(finished_at)
       ).and_return(form)
     end
 
