@@ -27,5 +27,7 @@ jobs:
           EOF
           sudo apt-get -yqq install heroku
           heroku git:remote --app ${HEROKU_APP_NAME}
-          git push heroku master
+          git branch
+          git remote
+          git push heroku HEAD:refs/heads/master
           echo 'Deploy front'
