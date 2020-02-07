@@ -1,24 +1,22 @@
-# README
+###  Dependents:
++ postgresql 11
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Project setup
+```
+bundle install
+```
 
-Things you may want to cover:
+### Start dev server
+```
+bundle exec rails s
+```
 
-* Ruby version
+### Run tests
+```
+bin/rspec
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Run linter check
+```
+bundle exec rubocop
+```
