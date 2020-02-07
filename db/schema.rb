@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_19_182424) do
+ActiveRecord::Schema.define(version: 2020_02_07_201616) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +35,15 @@ ActiveRecord::Schema.define(version: 2020_01_19_182424) do
     t.index ["user_id"], name: "index_moneybox_entries_on_user_id"
   end
 
+  create_table "planed_expenses", force: :cascade do |t|
+    t.string "name"
+    t.integer "amount"
+    t.bigint "finance_goal_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["finance_goal_id"], name: "index_planed_expenses_on_finance_goal_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -48,4 +56,5 @@ ActiveRecord::Schema.define(version: 2020_01_19_182424) do
 
   add_foreign_key "finance_goals", "moneybox_entries", on_delete: :cascade
   add_foreign_key "moneybox_entries", "users", on_delete: :cascade
+  add_foreign_key "planed_expenses", "finance_goals", on_delete: :cascade
 end
