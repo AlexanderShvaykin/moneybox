@@ -9,7 +9,7 @@ RSpec.shared_context "With auth user", with_auth_user: true do
   end
 end
 
-RSpec.shared_context "With auth user", with_api_user: true do
+RSpec.shared_context "With api user", with_api_user: true do
   let_it_be(:user) { create :user }
   let(:Authorization) { JsonWebToken.encode(user_id: user.id) }
 end
