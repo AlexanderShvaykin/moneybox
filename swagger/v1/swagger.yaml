@@ -1,0 +1,61 @@
+---
+swagger: '2.0'
+info:
+  title: API V1
+  version: v1
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  "/api/finance_goals/{goal_id}/planed_expenses":
+    get:
+      summary: Get list of expenses
+      tags:
+      - Planed Expenses
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: goal_id
+        type: number
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Returns list
+  "/tokens":
+    post:
+      summary: Get list of expenses
+      tags:
+      - Planed Expenses
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: params
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: test@test.org
+            password:
+              type: string
+              example: qwerty
+          required:
+          - email
+          - password
+      responses:
+        '200':
+          description: Returns token
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: some:token:jwt
