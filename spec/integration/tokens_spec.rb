@@ -33,6 +33,29 @@ describe "Tokens API" do
 
         run_test!
       end
+
+      response 401, "Invalid credentials" do
+        let(:params) do
+          {
+              email: user.email,
+              password: "invalid password"
+          }
+        end
+        schema type: :object, properties: {
+            errors: {
+                type: :array,
+                items: {
+                    type: :object,
+                    properties: {
+                        title: { type: :string },
+                        message: { type: :string }
+                    }
+                }
+            }
+        }
+
+        run_test!
+      end
     end
   end
 end
