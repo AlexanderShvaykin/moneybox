@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     resources :moneyboxes, controller: "moneybox_entries", except: %i[new edit] do
       resources :finance_goals, except: %i[new edit], shallow: true
     end
+    resources :finance_goals, only: [] do
+      resources :planed_expenses, except: %i[new edit], shallow: true
+    end
     resources :users, only: [] do
       collection do
         get :me
