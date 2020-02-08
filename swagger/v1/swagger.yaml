@@ -8,6 +8,28 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
+definitions:
+  planed_expense:
+    type: object
+    required:
+    - id
+    - attributes
+    properties:
+      id:
+        type: number
+        example: 19
+      attributes:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Mikl
+          amount:
+            type: number
+            example: 100
+        required:
+        - name
+        - amount
 paths:
   "/api/finance_goals/{goal_id}/planed_expenses":
     get:
@@ -26,6 +48,10 @@ paths:
       responses:
         '200':
           description: Returns list
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/planed_expense"
   "/tokens":
     post:
       summary: Get list of expenses
@@ -59,3 +85,17 @@ paths:
               token:
                 type: string
                 example: some:token:jwt
+        '401':
+          description: Invalid credentials
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    message:
+                      type: string
