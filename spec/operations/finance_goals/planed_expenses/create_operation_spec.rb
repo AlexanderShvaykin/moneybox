@@ -4,24 +4,33 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
   describe "#call" do
     subject(:run_operation) { described_class.new(params).call(repo) }
 
-    let(:repo) { class_double(FinanceGoal, find_by: goal) }
-    let(:goal) { instance_double(FinanceGoal, planed_expenses: relation, id: 1, update: true) }
+    let(:repo) { class_double(FinanceGoal, find_by: nil) }
+    let(:goal) do
+      instance_double(
+          FinanceGoal, planed_expenses: relation, id: 1, payment_amount: 10,
+          'payment_amount=' => true, save!: true
+      )
+    end
     let(:relation) { class_double(PlanedExpense, new: expense) }
-    let(:expense) { instance_double(PlanedExpense, save: true) }
+    let(:expense) { instance_double(PlanedExpense, save!: true, amount: 100) }
     let(:params) { Hash[name: "Milk", amount: 100, finance_goal_id: goal.id] }
 
+    before do
+      allow(repo).to receive(:find_by).with(id: goal.id).and_return(goal)
+    end
+
     it "saves expense" do
-      expect(expense).to receive(:save)
+      expect(expense).to receive(:save!)
       run_operation
     end
 
     it "builds with params" do
-      expect(relation).to receive(:new).with(params)
+      expect(relation).to receive(:new).with(Hash[name: "Milk", amount: 100])
       run_operation
     end
 
     it "updates goal" do
-      expect(goal).to receive(:update)
+      expect(goal).to receive(:save!)
       run_operation
     end
 
@@ -51,33 +60,6 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
       end
     end
 
-    context "with invalid goal" do
-      let(:goal) { instance_double(FinanceGoal, planed_expenses: relation, id: 1, update: false) }
-
-      it "returns error and payload" do
-        expect(subject.failure).to contain_exactly :unprocessable_entity, instance_of(Array)
-      end
-    end
-
-    context "with invalid expense" do
-      let(:goal) { instance_double(FinanceGoal, planed_expenses: relation, id: 1, update: false) }
-      let(:expense) { instance_double(PlanedExpense, save: false) }
-
-      it "returns error and payload" do
-        expect(subject.failure).to contain_exactly :unprocessable_entity, instance_of(Array)
-      end
-
-      it "saves expense" do
-        expect(expense).to receive(:save)
-        run_operation
-      end
-
-      it "updates goal" do
-        expect(goal).not_to receive(:update)
-        run_operation
-      end
-    end
-
     describe "integrations tests" do
       let_it_be(:goal, reload: true) { create :finance_goal, payment_amount: 10 }
       let(:repo) { FinanceGoal }
@@ -93,12 +75,15 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
       context "when goal not saves" do
         before do
           allow(FinanceGoal).to receive(:find_by).and_return(goal)
-          allow(goal).to receive(:update).and_return(false)
+          allow(goal).to receive(:save!) do
+            raise "Invalid Record"
+          end
         end
 
         it "not changes count and goal amount" do
           expect { subject }.to not_change(PlanedExpense, :count)
             .and not_change { goal.reload.payment_amount }
+            .and raise_error
         end
       end
     end
