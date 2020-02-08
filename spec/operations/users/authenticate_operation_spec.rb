@@ -33,7 +33,7 @@ describe Users::AuthenticateOperation do
         end
 
         it "returns error and payload" do
-          expect(subject.failure).to contain_exactly :unauthorized, ""
+          expect(subject.failure).to contain_exactly :unauthorized, []
         end
       end
 
@@ -41,7 +41,7 @@ describe Users::AuthenticateOperation do
         let(:user) { instance_double(User, authenticate: false) }
 
         it "returns error and payload" do
-          expect(subject.failure).to contain_exactly :unauthorized, ""
+          expect(subject.failure).to contain_exactly :unauthorized, []
         end
       end
     end
