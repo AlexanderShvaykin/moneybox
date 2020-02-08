@@ -49,9 +49,14 @@ paths:
         '200':
           description: Returns list
           schema:
-            type: array
-            items:
-              "$ref": "#/definitions/planed_expense"
+            type: object
+            required:
+            - data
+            properties:
+              date:
+                type: array
+                items:
+                  "$ref": "#/definitions/planed_expense"
   "/tokens":
     post:
       summary: Get list of expenses
