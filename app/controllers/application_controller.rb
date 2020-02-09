@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
 
   private
 
-  def run_operation(result)
+  def render_result(result)
     case result
     in Dry::Monads::Result::Success[(Integer | Symbol) => status, entity]
       block_given? ? yield(entity, status) : render(json: entity, status: status)
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::API
     if result.success?
       @current_user = result.value!.last
     else
-      run_operation(result)
+      render_result(result)
     end
   end
   alias_method :authenticate_request, :current_user

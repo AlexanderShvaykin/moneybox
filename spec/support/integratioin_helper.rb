@@ -18,4 +18,13 @@ module IntegrationHelper
       run_test!
     end
   end
+
+  def response_400(key, params)
+    response 400, "Invalid credentials" do
+      let(key) { params }
+      schema "$ref" => "#/definitions/error_msg"
+
+      run_test!
+    end
+  end
 end

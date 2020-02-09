@@ -31,5 +31,35 @@ describe "Planed expenses API", :with_api_user do
       response_401
       response_404 :goal_id
     end
+
+    post "Add new expenses" do
+      let(:params) { Hash[name: "Mouse", amount: 10] }
+      tags "Planed Expenses"
+      consumes "application/json"
+      produces "application/json"
+      security [ api_key: [] ]
+
+      parameter name: :goal_id, type: :number, in: :path
+      parameter name: :params, in: :body, required: true, schema: {
+          type: :object,
+          properties: {
+              name: { type: :string, example: "Milk" },
+              amount: { type: :number, example: 100 }
+          },
+          required: %i[name amount]
+      }
+
+      response 201, "Returns new expense" do
+        schema type: :object, required: %i[data], properties: {
+            data: { "$ref" => "#/definitions/planed_expense" }
+        }
+
+        run_test!
+      end
+
+      response_401
+      response_404 :goal_id
+      response_400 :params, {}
+    end
   end
 end
