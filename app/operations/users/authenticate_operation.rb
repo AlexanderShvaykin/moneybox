@@ -19,7 +19,7 @@ module Users
       user = User.find_by(email: values[:email])
       return Success(user) if user && user.authenticate(values[:password])
 
-      Failure([:unauthorized, ""])
+      Failure([:unauthorized, []])
     end
   end
 end

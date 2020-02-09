@@ -1,0 +1,15 @@
+type: object
+required:
+  - errors
+properties:
+  errors:
+    type: array
+    items:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        message:
+          type: string

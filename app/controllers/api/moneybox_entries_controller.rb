@@ -8,26 +8,26 @@ module Api
 
     def create
       operation = Moneyboxes::CreateOperation.new(user: current_user, **params)
-      run_operation(operation.call) do |box, status|
+      render_result(operation.call) do |box, status|
         render json: MoneyboxSerializer.new(box), status: status
       end
     end
 
     def show
-      run_operation(FindOperation.new(id: params[:id]).call(current_user.moneybox_entries)) do |box|
+      render_result(FindOperation.new(id: params[:id]).call(current_user.moneybox_entries)) do |box|
         render json: MoneyboxSerializer.new(box)
       end
     end
 
     def update
       operation = Moneyboxes::UpdateOperation.new(user: current_user, **params)
-      run_operation(operation.call) do |box|
+      render_result(operation.call) do |box|
         render json: MoneyboxSerializer.new(box)
       end
     end
 
     def destroy
-      run_operation(DestroyOperation.new(**params).call(current_user.moneybox_entries))
+      render_result(DestroyOperation.new(**params).call(current_user.moneybox_entries))
     end
   end
 end

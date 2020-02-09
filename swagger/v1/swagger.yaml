@@ -1,0 +1,172 @@
+---
+swagger: '2.0'
+info:
+  title: API V1
+  version: v1
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  planed_expense:
+    type: object
+    required:
+    - id
+    - attributes
+    properties:
+      id:
+        type: string
+        example: 19
+      attributes:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Mikl
+          amount:
+            type: number
+            example: 100
+        required:
+        - name
+        - amount
+  error_msg:
+    type: object
+    required:
+    - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          required:
+          - title
+          properties:
+            title:
+              type: string
+            message:
+              type: string
+paths:
+  "/api/finance_goals/{goal_id}/planed_expenses":
+    get:
+      summary: Get list of expenses
+      tags:
+      - Planed Expenses
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: goal_id
+        type: number
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Returns list
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                type: array
+                items:
+                  "$ref": "#/definitions/planed_expense"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+    post:
+      summary: Add new expenses
+      tags:
+      - Planed Expenses
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: goal_id
+        type: number
+        in: path
+        required: true
+      - name: params
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Milk
+            amount:
+              type: number
+              example: 100
+          required:
+          - name
+          - amount
+      responses:
+        '201':
+          description: Returns new expense
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                "$ref": "#/definitions/planed_expense"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '400':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+  "/tokens":
+    post:
+      summary: Get list of expenses
+      tags:
+      - Planed Expenses
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: params
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: test@test.org
+            password:
+              type: string
+              example: qwerty
+          required:
+          - email
+          - password
+      responses:
+        '200':
+          description: Returns token
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: some:token:jwt
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
