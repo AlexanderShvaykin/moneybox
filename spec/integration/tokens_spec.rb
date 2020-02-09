@@ -41,18 +41,7 @@ describe "Tokens API" do
               password: "invalid password"
           }
         end
-        schema type: :object, properties: {
-            errors: {
-                type: :array,
-                items: {
-                    type: :object,
-                    properties: {
-                        title: { type: :string },
-                        message: { type: :string }
-                    }
-                }
-            }
-        }
+        schema "$ref" => "#/definitions/error_msg"
 
         run_test!
       end
