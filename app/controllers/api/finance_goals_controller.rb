@@ -4,14 +4,14 @@ module Api
   class FinanceGoalsController < ApplicationController
     def index
       operation = FinanceGoals::IndexOperation.new(**params)
-      render_result operation.call(current_user.moneybox_entries) do |finance_goals|
+      render_result operation.call(moneybox_repo) do |finance_goals|
         render json: FinanceGoalSerializer.new(finance_goals, is_collection: true)
       end
     end
 
     def create
       operation = FinanceGoals::CreateOperation.new(**params)
-      render_result operation.call(current_user.moneybox_entries) do |finance_goal|
+      render_result operation.call(moneybox_repo) do |finance_goal|
         render json: FinanceGoalSerializer.new(finance_goal)
       end
     end
@@ -28,6 +28,10 @@ module Api
     end
 
     private
+
+    def moneybox_repo
+      MoneyboxEntryRepository.new(current_user)
+    end
 
     def finance_goal_repo
       FinanceGoalRepository.new(current_user)
