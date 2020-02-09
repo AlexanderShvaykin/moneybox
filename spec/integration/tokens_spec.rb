@@ -1,4 +1,6 @@
-require 'swagger_helper'
+# frozen_string_literal: true
+
+require "swagger_helper"
 
 describe "Tokens API" do
   let_it_be(:user) { create :user, secret: "123" }
@@ -13,9 +15,9 @@ describe "Tokens API" do
     let(:goal_id) { goal.id }
 
     post "Get list of expenses" do
-      tags 'Planed Expenses'
-      consumes 'application/json'
-      produces 'application/json'
+      tags "Planed Expenses"
+      consumes "application/json"
+      produces "application/json"
 
       parameter name: :params, in: :body, schema: {
           type: :object,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinanceGoalRepository
   attr_reader :user, :relation
 

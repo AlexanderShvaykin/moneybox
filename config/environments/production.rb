@@ -20,5 +20,5 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-  Rails.application.routes.default_url_options[:host] = ENV['APP_HOST']
+  Rails.application.routes.default_url_options[:host] = ENV["APP_HOST"]
 end

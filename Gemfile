@@ -35,8 +35,8 @@ gem "oj", "~> 3.10"
 gem "fast_jsonapi"
 gem "active_model_attributes"
 gem "russian"
-gem 'rswag-api'
-gem 'rswag-ui'
+gem "rswag-api"
+gem "rswag-ui"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -48,8 +48,8 @@ group :development, :test do
   gem "faker"
   gem "pry-byebug"
   gem "spring-commands-rspec"
-  gem 'rspec-rails'
-  gem 'rswag-specs'
+  gem "rspec-rails"
+  gem "rswag-specs"
 end
 
 group :development do
