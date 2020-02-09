@@ -16,7 +16,7 @@ definitions:
     - attributes
     properties:
       id:
-        type: number
+        type: string
         example: 19
       attributes:
         type: object
@@ -30,6 +30,22 @@ definitions:
         required:
         - name
         - amount
+  error_msg:
+    type: object
+    required:
+    - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          required:
+          - title
+          properties:
+            title:
+              type: string
+            message:
+              type: string
 paths:
   "/api/finance_goals/{goal_id}/planed_expenses":
     get:
@@ -53,10 +69,70 @@ paths:
             required:
             - data
             properties:
-              date:
+              data:
                 type: array
                 items:
                   "$ref": "#/definitions/planed_expense"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+    post:
+      summary: Add new expenses
+      tags:
+      - Planed Expenses
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: goal_id
+        type: number
+        in: path
+        required: true
+      - name: params
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Milk
+            amount:
+              type: number
+              example: 100
+          required:
+          - name
+          - amount
+      responses:
+        '201':
+          description: Returns new expense
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                "$ref": "#/definitions/planed_expense"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '400':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
   "/tokens":
     post:
       summary: Get list of expenses
@@ -93,14 +169,4 @@ paths:
         '401':
           description: Invalid credentials
           schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    message:
-                      type: string
+            "$ref": "#/definitions/error_msg"
