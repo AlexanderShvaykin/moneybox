@@ -8,7 +8,6 @@ properties:
       type: object
       required:
         - title
-        - message
       properties:
         title:
           type: string
