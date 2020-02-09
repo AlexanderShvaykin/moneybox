@@ -4,7 +4,7 @@ required:
   - attributes
 properties:
   id:
-    type: number
+    type: string
     example: 19
   attributes:
     type: object

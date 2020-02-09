@@ -18,7 +18,7 @@ describe "Planed expenses API", :with_api_user do
 
       response 200, "Returns list" do
         schema type: :object, required: %i[data], properties: {
-            date: { type: :array, items: { "$ref" => "#/definitions/planed_expense" } }
+            data: { type: :array, items: { "$ref" => "#/definitions/planed_expense" } }
         }
 
         run_test!
