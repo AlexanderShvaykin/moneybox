@@ -1,0 +1,53 @@
+type: object
+required:
+  - id
+  - attributes
+  - relationships
+properties:
+  id:
+    type: string
+    example: 19
+  relationships:
+    type: object
+    required:
+      - planedExpenses
+    properties:
+      planedExpenses:
+        type: object
+        required:
+          - links
+        properties:
+          links:
+            type: object
+            required:
+              - related
+            properties:
+              related:
+                type: string
+                example: "https://example.com/expenses"
+  attributes:
+    type: object
+    properties:
+      paymentAmount:
+        type: integer
+        example: 1200
+      incomeAmount:
+        type: integer
+        example: 1200
+      startedAt:
+        type: string
+        example: "2020-02-15T12:31:11+03:00"
+        format: date-time
+      finishedAt:
+        type: string
+        example: "2020-02-15T12:31:11+03:00"
+        format: date-time
+      monthNumber:
+        type: integer
+        example: 12
+    required:
+      - paymentAmount
+      - incomeAmount
+      - startedAt
+      - finishedAt
+      - monthNumber

@@ -9,6 +9,60 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
+  finance_goal:
+    type: object
+    required:
+    - id
+    - attributes
+    - relationships
+    properties:
+      id:
+        type: string
+        example: 19
+      relationships:
+        type: object
+        required:
+        - planedExpenses
+        properties:
+          planedExpenses:
+            type: object
+            required:
+            - links
+            properties:
+              links:
+                type: object
+                required:
+                - related
+                properties:
+                  related:
+                    type: string
+                    example: https://example.com/expenses
+      attributes:
+        type: object
+        properties:
+          paymentAmount:
+            type: integer
+            example: 1200
+          incomeAmount:
+            type: integer
+            example: 1200
+          startedAt:
+            type: string
+            example: '2020-02-15T12:31:11+03:00'
+            format: date-time
+          finishedAt:
+            type: string
+            example: '2020-02-15T12:31:11+03:00'
+            format: date-time
+          monthNumber:
+            type: integer
+            example: 12
+        required:
+        - paymentAmount
+        - incomeAmount
+        - startedAt
+        - finishedAt
+        - monthNumber
   planed_expense:
     type: object
     required:
@@ -47,6 +101,40 @@ definitions:
             message:
               type: string
 paths:
+  "/api/moneyboxes/{moneybox_id}/finance_goals":
+    get:
+      summary: Get list of goals
+      tags:
+      - goals
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: moneybox_id
+        type: number
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Returns list
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                type: array
+                items:
+                  "$ref": "#/definitions/finance_goal"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
   "/api/finance_goals/{goal_id}/planed_expenses":
     get:
       summary: Get list of expenses
