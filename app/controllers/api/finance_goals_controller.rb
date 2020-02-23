@@ -16,6 +16,13 @@ module Api
       end
     end
 
+    def show
+      repo = FinanceGoalRepository.new(current_user)
+      render_result(FindOperation.new(id: params[:id]).call(repo)) do |finance_goal|
+        render json: FinanceGoalSerializer.new(finance_goal)
+      end
+    end
+
     def update
       operation = FinanceGoals::UpdateOperation.new(**params)
       render_result operation.call(finance_goal_repo) do |finance_goal|

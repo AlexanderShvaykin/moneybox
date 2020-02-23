@@ -13,7 +13,7 @@ describe "Finance Goals API", :with_api_user do
       produces "application/json"
       security [ api_key: [] ]
 
-      parameter name: :moneybox_id, type: :number, in: :path
+      parameter name: :moneybox_id, type: :integer, in: :path
 
       response 200, "Returns list" do
         schema type: :object, required: %i[data], properties: {
@@ -29,6 +29,33 @@ describe "Finance Goals API", :with_api_user do
 
       response_401
       response_404 :moneybox_id
+    end
+  end
+
+  path "/api/finance_goals/{id}" do
+    let(:id) { fin_goal.id }
+
+    get "Get goal" do
+      tags "goals"
+      produces "application/json"
+      security [ api_key: [] ]
+
+      parameter name: :id, type: :integer, in: :path
+
+      response 200, "Returns goal info" do
+        schema type: :object, required: %i[data], properties: {
+          data: { "$ref" => "#/definitions/finance_goal" }
+        }
+
+        run_test!
+
+        it "returns goal" do
+          expect(JSON.parse(response.body)["data"]["id"]).to eq(fin_goal.id.to_s)
+        end
+      end
+
+      response_401
+      response_404
     end
   end
 end
