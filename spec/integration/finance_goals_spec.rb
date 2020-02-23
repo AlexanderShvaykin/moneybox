@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-describe 'Finance Goals API', :with_api_user do
+describe "Finance Goals API", :with_api_user do
   let_it_be(:moneybox) { create :moneybox, user: user }
   let_it_be(:fin_goal) { create :finance_goal, moneybox: moneybox }
   let(:moneybox_id) { moneybox.id }
