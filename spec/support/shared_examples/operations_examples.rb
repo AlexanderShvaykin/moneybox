@@ -6,3 +6,9 @@ RSpec.shared_examples "calls find_operation" do
     subject
   end
 end
+
+RSpec.shared_examples "return result" do
+  it "returns result" do
+    expect(subject.value!).to eq result
+  end
+end

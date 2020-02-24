@@ -16,6 +16,11 @@ describe FinanceGoals::PlanedExpenses::UpdateOperation do
       allow(record).to receive(:save!).and_return(true)
     end
 
+    it_behaves_like "calls find_operation"
+    it_behaves_like "return result" do
+      let(:result) { [:ok, record] }
+    end
+
     it "updates record" do
       expect(record).to receive(:assign_attributes).with(name: "Foo")
       update
