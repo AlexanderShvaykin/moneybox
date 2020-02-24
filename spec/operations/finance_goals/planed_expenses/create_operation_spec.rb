@@ -7,8 +7,7 @@ describe FinanceGoals::PlanedExpenses::CreateOperation do
     let(:repo) { class_double(FinanceGoal, find_by: nil) }
     let(:goal) do
       instance_double(
-        FinanceGoal, planed_expenses: relation, id: 1, payment_amount: 10,
-          "payment_amount=" => true, save!: true
+        FinanceGoal, planed_expenses: relation, id: 1, payment_amount: 10, increment: true, save!: true
       )
     end
     let(:relation) { class_double(PlanedExpense, new: expense) }

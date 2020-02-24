@@ -18,7 +18,7 @@ class FinanceGoals::PlanedExpenses::CreateOperation < ApplicationOperation
 
   def create_expense(goal, values)
     expense = goal.planed_expenses.new(values)
-    goal.payment_amount += expense.amount
+    goal.increment(:payment_amount, expense.amount)
     ApplicationRecord.transaction do
       expense.save!
       goal.save!
