@@ -15,6 +15,14 @@ class Api::PlanedExpensesController < ApplicationController
     end
   end
 
+  def update
+    operation = FinanceGoals::PlanedExpenses::UpdateOperation.new(**params)
+    expense_repo = PlanedExpensesRepository.new(current_user)
+    render_result operation.call(expense_repo) do |planed_expense, status|
+      render json: PlanedExpenseSerializer.new(planed_expense), status: status
+    end
+  end
+
   private
 
   def repo
