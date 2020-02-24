@@ -3,6 +3,9 @@
 RSpec.describe Api::PlanedExpensesController, :with_auth_user do
   let_it_be(:moneybox) { create :moneybox, user: user }
   let_it_be(:goal, reload: true) { create :finance_goal, moneybox: moneybox }
+  let_it_be(:planed_expense, reload: true) do
+    create :planed_expense, amount: 100, name: "Milk", goal: goal
+  end
 
   describe "POST #create" do
     subject { post :create, params: params.merge(form_params), as: :json }
@@ -28,9 +31,6 @@ RSpec.describe Api::PlanedExpensesController, :with_auth_user do
   describe "PATCH #update" do
     subject { post :update, params: params.merge(form_params), as: :json }
 
-    let_it_be(:planed_expense, reload: true) do
-      create :planed_expense, amount: 100, name: "Milk", goal: goal
-    end
     let(:params) { Hash[id: planed_expense.id] }
     let(:form_params) { Hash[amount: 300] }
 
@@ -41,6 +41,21 @@ RSpec.describe Api::PlanedExpensesController, :with_auth_user do
     it "updates expense" do
       expect { subject }.to change { planed_expense.reload.amount }.to(300)
        .and change { goal.reload.payment_amount }.by(200)
+    end
+  end
+
+  describe "DELETE #destroy" do
+    subject { delete :destroy, params: params }
+
+    let(:params) { Hash[id: planed_expense.id] }
+
+    before_all do
+      goal.update(payment_amount: planed_expense.amount)
+    end
+
+    it "deletes expense and updates goal" do
+      expect { subject }.to change(PlanedExpense, :count).by(-1)
+         .and change { goal.reload.payment_amount }.by(-100)
     end
   end
 end

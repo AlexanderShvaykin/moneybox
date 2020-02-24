@@ -6,7 +6,7 @@ class FinanceGoals::PlanedExpenses::UpdateOperation < FinanceGoals::PlanedExpens
     optional(:name).filled(:string)
   end
 
-  def call(repo)
+  def call(repo = PlanedExpensesRepository.new(user))
     expense = yield(::FindOperation.new(id: params[:id]).call(repo)).last
     values = yield validate_schema
     yield update_expense(expense, values)
