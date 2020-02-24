@@ -6,7 +6,7 @@ class FinanceGoals::PlanedExpenses::CreateOperation < ApplicationOperation
     required(:name).filled(:string)
   end
 
-  def call(repo)
+  def call(repo = FinanceGoalRepository.new(user))
     goal = yield(::FindOperation.new(id: params[:finance_goal_id]).call(repo)).last
     values = yield validate_schema
     record = yield create_expense(goal, values)
@@ -18,7 +18,7 @@ class FinanceGoals::PlanedExpenses::CreateOperation < ApplicationOperation
 
   def create_expense(goal, values)
     expense = goal.planed_expenses.new(values)
-    goal.payment_amount += expense.amount
+    goal.increment(:payment_amount, expense.amount)
     ApplicationRecord.transaction do
       expense.save!
       goal.save!

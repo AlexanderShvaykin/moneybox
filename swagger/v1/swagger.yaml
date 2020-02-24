@@ -112,7 +112,7 @@ paths:
       - api_key: []
       parameters:
       - name: moneybox_id
-        type: number
+        type: integer
         in: path
         required: true
       responses:
@@ -127,6 +127,38 @@ paths:
                 type: array
                 items:
                   "$ref": "#/definitions/finance_goal"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+  "/api/finance_goals/{id}":
+    get:
+      summary: Get goal
+      tags:
+      - goals
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: id
+        type: integer
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Returns goal info
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                "$ref": "#/definitions/finance_goal"
         '401':
           description: Invalid credentials
           schema:
@@ -202,6 +234,56 @@ paths:
       responses:
         '201':
           description: Returns new expense
+          schema:
+            type: object
+            required:
+            - data
+            properties:
+              data:
+                "$ref": "#/definitions/planed_expense"
+        '401':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '404':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+        '400':
+          description: Invalid credentials
+          schema:
+            "$ref": "#/definitions/error_msg"
+  "/api/planed_expenses/{id}":
+    patch:
+      summary: Update expense
+      tags:
+      - Planed Expenses
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      security:
+      - api_key: []
+      parameters:
+      - name: id
+        type: number
+        in: path
+        required: true
+      - name: params
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Milk
+            amount:
+              type: number
+              example: 100
+      responses:
+        '200':
+          description: Returns expense
           schema:
             type: object
             required:
