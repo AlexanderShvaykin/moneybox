@@ -93,7 +93,7 @@ describe "Planed expenses API", :with_api_user do
 
       response_401
       response_404
-      response_400 :params, {amount: "super bike"}
+      response_400 :params, { amount: "super bike" }
     end
   end
 end

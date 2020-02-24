@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MockRepository
   attr_reader :relation, :record
 

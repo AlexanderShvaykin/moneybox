@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlanedExpensesRepository
   attr_reader :relation, :user
 
