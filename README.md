@@ -26,6 +26,6 @@ bundle exec rails g operation SomeAction
 bundle exec rubocop
 ```
 
-####Swagger doc
+#### Swagger doc
 
 /api-docs/index.html
