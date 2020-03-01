@@ -5,12 +5,21 @@ class ApplicationController < ActionController::API
 
   before_action :authenticate_request
 
+  # Overwrite controller params, all validation calls into operation
+  # @return [Hash]
   def params
     super.to_unsafe_hash
   end
 
-  private
-
+  # Render operation result payload with result
+  # @example
+  #   render_result(Users::AuthenticateOperation.new(**params).call
+  #   # or
+  #   render_result operation.call(moneybox_repo) do |finance_goals|
+  #     render json: FinanceGoalSerializer.new(finance_goals, is_collection: true)
+  #   end
+  # @param result [Dry::Monads::Result] Operation Result
+  # @yield render payload with serializer
   def render_result(result)
     case result
     in Dry::Monads::Result::Success[(Integer | Symbol) => status, entity]
@@ -21,6 +30,8 @@ class ApplicationController < ActionController::API
       raise ArgumentError, "invalid operation result"
     end
   end
+
+  private
 
   def serialize_errors(errors)
     errors.map do |e|

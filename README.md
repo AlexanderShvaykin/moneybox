@@ -6,6 +6,12 @@
 bundle install
 ```
 
+### Generate doc
+
+```
+yardoc 'lib/**/*.rb' 'app/**/*.rb'
+```
+
 ### Start dev server
 ```
 bundle exec rails s
